@@ -13,6 +13,8 @@ public class ContactRepository : IContactRespository
         _context = context;
     }
 
+    public Task<List<Category>> categories => _context.Categories.ToListAsync();
+
     public void AddContactAsync(Contact contact)
     {
         if (contact == null)

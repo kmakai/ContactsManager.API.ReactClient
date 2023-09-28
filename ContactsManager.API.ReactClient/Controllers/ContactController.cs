@@ -30,6 +30,20 @@ public class ContactController : ControllerBase
         }
     }
 
+    [HttpGet("categories")]
+    public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+    {
+        try
+        {
+            var result = await _contactRepository.categories;
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving categories: {ex.Message}");
+        }
+    }
+
 
     [HttpPost]
     public ActionResult AddContact([FromBody] ContactDTO contact)
