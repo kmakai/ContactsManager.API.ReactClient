@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import Contact from "./components/Contact";
 import ContactForm from "./components/ContactForm";
 import ContactEditForm from "./components/ContactEditForm";
+import ContactsList from "./components/ContactsList";
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -37,15 +37,10 @@ function App() {
           </div>
         </div>
         <div className="main-panel px-4">
-          {/* <table className="contacts-cards">
-            <tbody className="space-y-2">
-              {contacts.map((contacts: any) => (
-                <Contact key={contacts.id} contact={contacts} />
-              ))}
-            </tbody>
-          </table> */}
+          {/*           
           <ContactForm />
-          <ContactEditForm />
+          <ContactEditForm /> */}
+          <ContactsList contacts={contacts} />
         </div>
       </div>
     </>

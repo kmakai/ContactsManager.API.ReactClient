@@ -1,5 +1,10 @@
-const Contact: React.FC = (props: any) => {
-  const { contact } = props;
+import { ContactType } from "../types";
+
+type contactProps = {
+  contact: ContactType;
+};
+
+const Contact: React.FC<contactProps> = ({ contact }) => {
   return (
     // <div className="contact-card border my-2 bg-slate-100 text-slate-900 flex flex-col">
     //   <div className="">{contact.name}</div>

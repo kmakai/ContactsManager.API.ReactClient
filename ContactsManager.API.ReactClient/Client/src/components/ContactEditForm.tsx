@@ -1,36 +1,14 @@
 import { useEffect, useState } from "react";
-
-enum LastContactType {
-  Email,
-  Phone,
-  TextMessage,
-  VideoCall,
-  FaceToFace,
-}
-
-enum ContactFrequency {
-  Daily,
-  Weekly,
-  Monthly,
-  Quarterly,
-  Yearly,
-}
-
-type Contact = {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  notes: string;
-  lastContact: number;
-  lastContactDate: Date;
-  desiredContactFrequency: number;
-  categoryId: number;
-};
+import {
+  ContactType,
+  LastContactType,
+  ContactFrequency,
+  CategoryType,
+} from "../types";
 
 const ContactEditForm: React.FC = () => {
   const [categories, setCategories] = useState([]);
-  const [contact, setContact] = useState<Contact>()!;
+  const [contact, setContact] = useState<ContactType>()!;
 
   async function saveContact(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -157,7 +135,7 @@ const ContactEditForm: React.FC = () => {
           );
         }}
       >
-        {categories.map((category: { id: number; name: string }) => (
+        {categories.map((category: CategoryType) => (
           <option key={category.id} value={category.id}>
             {category.name}
           </option>
