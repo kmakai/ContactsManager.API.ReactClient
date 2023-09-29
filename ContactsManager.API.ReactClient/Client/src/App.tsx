@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Contact from "./components/Contact";
 import ContactForm from "./components/ContactForm";
+import ContactEditForm from "./components/ContactEditForm";
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -44,6 +45,7 @@ function App() {
             </tbody>
           </table> */}
           <ContactForm />
+          <ContactEditForm />
         </div>
       </div>
     </>

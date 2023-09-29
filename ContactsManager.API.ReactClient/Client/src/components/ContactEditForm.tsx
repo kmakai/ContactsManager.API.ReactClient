@@ -28,34 +28,21 @@ type Contact = {
   categoryId: number;
 };
 
-const ContactForm: React.FC = () => {
+const ContactEditForm: React.FC = () => {
   const [categories, setCategories] = useState([]);
-  const [contact, setContact] = useState<Contact>({
-    id: 0,
-    name: "",
-    email: "",
-    phone: "",
-    notes: "",
-    lastContact: 0,
-    lastContactDate: new Date(),
-    desiredContactFrequency: 0,
-    categoryId: 0,
-  })!;
+  const [contact, setContact] = useState<Contact>()!;
 
   async function saveContact(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // const form = e.currentTarget;
-    // console.log(form);
-    // const formData = new FormData(form);
-    // const contact = Object.fromEntries(formData.entries());
-    console.log(contact);
-
-    const response = await fetch("https://localhost:7139/api/Contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contact),
-    });
+    const response = await fetch(
+      `https://localhost:7139/api/Contact/${contact?.id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contact),
+      }
+    );
 
     const data = await response.json();
 
@@ -71,7 +58,15 @@ const ContactForm: React.FC = () => {
     setCategories(data);
   }
 
+  async function getContact() {
+    const response = await fetch("https://localhost:7139/api/Contact/8");
+    const data = await response.json();
+    console.log(data);
+    setContact(data);
+  }
+
   useEffect(() => {
+    getContact();
     getCategories();
   }, []);
 
@@ -208,4 +203,4 @@ const ContactForm: React.FC = () => {
   );
 };
 
-export default ContactForm;
+export default ContactEditForm;
