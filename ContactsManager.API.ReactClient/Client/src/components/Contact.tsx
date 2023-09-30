@@ -1,24 +1,46 @@
-import { ContactType } from "../types";
+import React, { useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+// import { ContactType } from "../types";
+import { useAppSelector, useAppDispatch } from "../features/hooks";
+import { getContact, deleteContact } from "../features/contactsSlice";
 
-type contactProps = {
-  contact: ContactType;
-};
+const Contact: React.FC = () => {
+  const { contactId } = useParams<{ contactId: string }>();
+  const contact = useAppSelector((state) => state.contacts.contact);
 
-const Contact: React.FC<contactProps> = ({ contact }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  function OnDelete() {
+    if (confirm("Are you sure you want to delete this contact?")) {
+      dispatch(deleteContact(+contactId!));
+    } else {
+      return;
+    }
+
+    setTimeout(() => {
+      navigate(`/`);
+    }, 1000);
+  }
+
+  useEffect(() => {
+    dispatch(getContact(+contactId!));
+  }, [dispatch, contactId]);
   return (
-    // <div className="contact-card border my-2 bg-slate-100 text-slate-900 flex flex-col">
-    //   <div className="">{contact.name}</div>
-    //   <div className="">{contact.email}</div>
-    //   <div className="">{contact.phone}</div>
-    // </div>
-    <>
-      <tr className="border p-2 flex justify-between">
-        <td>{contact.name}</td>
-        <td>{contact.category.name}</td>
-        <td>{contact.email}</td>
-        <td>{contact.phone}</td>
-      </tr>
-    </>
+    <div>
+      <h1>contact info</h1>
+      <hr />
+      <p>{contact?.name}</p>
+      <p>{contact?.email}</p>
+      <p>{contact?.phone}</p>
+      <p>{contact?.category.name}</p>
+      <button>
+        <Link to={`/contacts/${contact?.id}/edit`}>edit</Link>
+      </button>
+      <button className="ms-4 bg-red-800 text-white" onClick={() => OnDelete()}>
+        Delete
+      </button>
+    </div>
   );
 };
 

@@ -1,36 +1,12 @@
 import { useEffect, useState } from "react";
-
-enum LastContactType {
-  Email,
-  Phone,
-  TextMessage,
-  VideoCall,
-  FaceToFace,
-}
-
-enum ContactFrequency {
-  Daily,
-  Weekly,
-  Monthly,
-  Quarterly,
-  Yearly,
-}
-
-type Contact = {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  notes: string;
-  lastContact: number;
-  lastContactDate: Date;
-  desiredContactFrequency: number;
-  categoryId: number;
-};
+import { ContactType, ContactFrequency, LastContactType } from "../types";
+import { useAppDispatch } from "../features/hooks";
+import { addContact } from "../features/contactsSlice";
+import { useNavigate } from "react-router-dom";
 
 const ContactForm: React.FC = () => {
   const [categories, setCategories] = useState([]);
-  const [contact, setContact] = useState<Contact>({
+  const [contact, setContact] = useState<ContactType>({
     id: 0,
     name: "",
     email: "",
@@ -39,27 +15,25 @@ const ContactForm: React.FC = () => {
     lastContact: 0,
     lastContactDate: new Date(),
     desiredContactFrequency: 0,
-    categoryId: 0,
+    categoryId: 1,
+    category: {
+      id: 1,
+      name: "family",
+    },
   })!;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   async function saveContact(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // const form = e.currentTarget;
-    // console.log(form);
-    // const formData = new FormData(form);
-    // const contact = Object.fromEntries(formData.entries());
-    console.log(contact);
-
-    const response = await fetch("https://localhost:7139/api/Contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contact),
-    });
-
-    const data = await response.json();
-
-    console.log(data);
+    try {
+      const res = await dispatch(addContact(contact!)).unwrap();
+      console.log(res);
+      if (res) navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async function getCategories() {

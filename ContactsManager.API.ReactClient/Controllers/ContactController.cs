@@ -48,7 +48,6 @@ public class ContactController : ControllerBase
     [HttpPost]
     public ActionResult AddContact([FromBody] ContactDTO contact)
     {
-        Console.WriteLine($"-----------------Contact: {contact.Name} - {contact.LastContact}");
         if (contact == null)
         {
             return BadRequest();
@@ -56,7 +55,6 @@ public class ContactController : ControllerBase
 
         try
         {
-            Console.WriteLine($"Contact: {contact.Name} - {contact.LastContact}" );
             var newContact = new Contact
             {
                 Name = contact.Name,

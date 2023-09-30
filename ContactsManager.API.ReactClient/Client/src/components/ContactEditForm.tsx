@@ -5,26 +5,25 @@ import {
   ContactFrequency,
   CategoryType,
 } from "../types";
+import { useAppDispatch, useAppSelector } from "../features/hooks";
+import { getContact, updateContact } from "../features/contactsSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ContactEditForm: React.FC = () => {
+  const { contactId } = useParams<{ contactId: string }>();
   const [categories, setCategories] = useState([]);
-  const [contact, setContact] = useState<ContactType>()!;
+  const [contact, setContact] = useState<ContactType>();
+  const current = useAppSelector((state) => state.contacts.contact);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   async function saveContact(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (contact) {
+      await dispatch(updateContact(contact));
+    }
 
-    const response = await fetch(
-      `https://localhost:7139/api/Contact/${contact?.id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(contact),
-      }
-    );
-
-    const data = await response.json();
-
-    console.log(data);
+    navigate(`/contacts/${contact?.id}`);
   }
 
   async function getCategories() {
@@ -36,15 +35,11 @@ const ContactEditForm: React.FC = () => {
     setCategories(data);
   }
 
-  async function getContact() {
-    const response = await fetch("https://localhost:7139/api/Contact/8");
-    const data = await response.json();
-    console.log(data);
-    setContact(data);
-  }
-
   useEffect(() => {
-    getContact();
+    if (!current) {
+      navigate(`/contacts/${contactId}`);
+    }
+    setContact(current!);
     getCategories();
   }, []);
 
