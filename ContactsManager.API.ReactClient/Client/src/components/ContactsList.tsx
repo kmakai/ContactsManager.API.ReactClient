@@ -30,13 +30,15 @@ const ContactsList: React.FC = () => {
   return (
     <div>
       {" "}
-      <table className="contacts-cards">
-        <tbody className="space-y-2">
+      <h1 className="font-bold uppercase text-slate-600">Contacts</h1>
+      <hr />
+      <div className="contacts-cards mt-2">
+        <div className="flex flex-col gap-2 flex-wrap">
           {contacts.map((contact: ContactType) => (
             <Contact key={contact.id} contact={contact} />
           ))}
-        </tbody>
-      </table>{" "}
+        </div>
+      </div>{" "}
     </div>
   );
 };

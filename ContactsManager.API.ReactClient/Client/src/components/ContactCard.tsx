@@ -1,4 +1,5 @@
 import { ContactType } from "../types";
+import { Link } from "react-router-dom";
 
 type contactProps = {
   contact: ContactType;
@@ -6,18 +7,15 @@ type contactProps = {
 
 const ContactCard: React.FC<contactProps> = ({ contact }) => {
   return (
-    // <div className="contact-card border my-2 bg-slate-100 text-slate-900 flex flex-col">
-    //   <div className="">{contact.name}</div>
-    //   <div className="">{contact.email}</div>
-    //   <div className="">{contact.phone}</div>
-    // </div>
     <>
-      <tr className="border p-2 flex justify-between">
-        <td>{contact.name}</td>
-        <td>{contact.category.name}</td>
-        <td>{contact.email}</td>
-        <td>{contact.phone}</td>
-      </tr>
+      <Link to={`/contacts/${contact.id}`}>
+        <div className="border p-2 flex justify-between rounded">
+          <span>{contact.name}</span>
+          <span>{contact.category.name}</span>
+          <span>{contact.email}</span>
+          <span>{contact.phone}</span>
+        </div>
+      </Link>
     </>
   );
 };

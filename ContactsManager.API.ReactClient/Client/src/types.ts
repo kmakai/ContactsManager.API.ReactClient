@@ -21,7 +21,7 @@ export type ContactType = {
   phone: string;
   notes: string;
   lastContact: number;
-  lastContactDate: Date;
+  lastContactDate: string;
   desiredContactFrequency: number;
   categoryId: number;
   category: CategoryType;

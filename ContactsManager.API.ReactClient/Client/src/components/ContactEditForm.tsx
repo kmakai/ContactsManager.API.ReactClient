@@ -6,7 +6,7 @@ import {
   CategoryType,
 } from "../types";
 import { useAppDispatch, useAppSelector } from "../features/hooks";
-import { getContact, updateContact } from "../features/contactsSlice";
+import { updateContact } from "../features/contactsSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ContactEditForm: React.FC = () => {
