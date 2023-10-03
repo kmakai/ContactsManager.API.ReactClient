@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  ContactType,
-  LastContactType,
-  ContactFrequency,
-  CategoryType,
-} from "../types";
+import { ContactType, LastContactType, ContactFrequency } from "../types";
 import { useAppDispatch, useAppSelector } from "../features/hooks";
 import { updateContact } from "../features/contactsSlice";
 import { useNavigate, useParams } from "react-router-dom";
@@ -47,113 +42,161 @@ const ContactEditForm: React.FC = () => {
     <form className="flex flex-col gap-2" onSubmit={saveContact}>
       <h1>edit contact</h1>
       <hr />
-      <input
-        type="text"
-        placeholder="name"
-        name="name"
-        id="name"
-        value={contact ? contact.name : ""}
-        onChange={(e) => {
-          console.log(e.target.value);
-          setContact((prev) =>
-            prev ? { ...prev, name: e.target.value } : prev
-          );
-        }}
-      />
-      <input
-        type="text"
-        placeholder="email"
-        name="email"
-        id="email"
-        value={contact ? contact.email : ""}
-        onChange={(e) => {
-          console.log(e.target.value);
-          setContact((prev) =>
-            prev ? { ...prev, email: e.target.value } : prev
-          );
-        }}
-      />
-      <input
-        type="text"
-        placeholder="phone"
-        name="phone"
-        id="phone"
-        value={contact ? contact.phone : ""}
-        onChange={(e) => {
-          console.log(e.target.value);
-          setContact((prev) =>
-            prev ? { ...prev, phone: e.target.value } : prev
-          );
-        }}
-      />
-      <input
-        type="date"
-        name="LastContactDate"
-        id="LastContactDate"
-        value={
-          contact
-            ? new Date(contact.lastContactDate).toISOString().split("T")[0]
-            : ""
-        }
-        onChange={(e) => {
-          console.log(e.target.value);
-          setContact((prev) =>
-            prev ? { ...prev, lastContactDate: new Date(e.target.value) } : prev
-          );
-        }}
-      />
-      <select
-        name="LastContact"
-        id="LastContact"
-        value={contact ? contact.lastContact : 0}
-        onChange={(e) => {
-          console.log(e.target.value);
-          setContact((prev) =>
-            prev ? { ...prev, lastContact: +e.target.value } : prev
-          );
-        }}
-      >
-        <option value={LastContactType.Email}>Email</option>
-        <option value={LastContactType.Phone}>Phone</option>
-        <option value={LastContactType.TextMessage}>Text Message</option>
-        <option value={LastContactType.VideoCall}>Video Call</option>
-        <option value={LastContactType.FaceToFace}>In Person</option>
-      </select>
-      <select
-        name="CategoryId"
-        id="CategoryId"
-        value={contact ? contact.categoryId : 0}
-        onChange={(e) => {
-          console.log(e.target.value);
-          setContact((prev) =>
-            prev ? { ...prev, categoryId: +e.target.value } : prev
-          );
-        }}
-      >
-        {categories.map((category: CategoryType) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
+      <div className="flex justify-between">
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          placeholder="name"
+          name="name"
+          id="name"
+          value={contact ? contact.name : ""}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setContact((prev) =>
+              prev ? { ...prev, name: e.target.value } : prev
+            );
+          }}
+          pattern="[A-Za-z ]+"
+          required
+        />
+      </div>
 
-      <select
-        name="DesiredContactFrequency"
-        id="DesiredContactFrequency"
-        value={contact ? contact.desiredContactFrequency : ""}
-        onChange={(e) => {
-          console.log(e.target.value);
-          setContact((prev) =>
-            prev ? { ...prev, desiredContactFrequency: +e.target.value } : prev
-          );
-        }}
-      >
-        <option value={ContactFrequency.Daily}>Daily</option>
-        <option value={ContactFrequency.Weekly}>Weekly</option>
-        <option value={ContactFrequency.Monthly}>Monthly</option>
-        <option value={ContactFrequency.Quarterly}>Quarterly</option>
-        <option value={ContactFrequency.Yearly}>Yearly</option>
-      </select>
+      <div className="flex justify-between">
+        <label htmlFor="email">Email:</label>
+        <input
+          type="text"
+          placeholder="email"
+          name="email"
+          id="email"
+          value={contact ? contact.email : ""}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setContact((prev) =>
+              prev ? { ...prev, email: e.target.value } : prev
+            );
+          }}
+          pattern={
+            "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
+          }
+        />
+      </div>
+
+      <div className="flex justify-between">
+        <label htmlFor="phone">Phone:</label>
+
+        <input
+          type="text"
+          placeholder="123-456-7890"
+          name="phone"
+          id="phone"
+          value={contact ? contact.phone : ""}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setContact((prev) =>
+              prev ? { ...prev, phone: e.target.value } : prev
+            );
+          }}
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          required
+        />
+      </div>
+      <div className="flex justify-between">
+        <span>
+          <label htmlFor="LastContactDate">Last Contacted:</label>
+        </span>
+        <input
+          type="date"
+          name="LastContactDate"
+          id="LastContactDate"
+          value={
+            contact
+              ? new Date(contact.lastContactDate).toISOString().split("T")[0]
+              : ""
+          }
+          onChange={(e) => {
+            console.log(e.target.value);
+            setContact((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    lastContactDate: new Date(e.target.value).toISOString(),
+                  }
+                : prev
+            );
+          }}
+        />
+      </div>
+
+      <div className="flex justify-between">
+        <span>
+          <label htmlFor="LastContact">Contacted By:</label>
+        </span>
+        <select
+          name="LastContact"
+          id="LastContact"
+          value={contact ? contact.lastContact : 0}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setContact((prev) =>
+              prev ? { ...prev, lastContact: +e.target.value } : prev
+            );
+          }}
+        >
+          <option value={LastContactType.Email}>Email</option>
+          <option value={LastContactType.Phone}>Phone</option>
+          <option value={LastContactType.TextMessage}>Text Message</option>
+          <option value={LastContactType.VideoCall}>Video Call</option>
+          <option value={LastContactType.FaceToFace}>In Person</option>
+        </select>
+      </div>
+
+      <div className="flex justify-between">
+        <span>
+          <label htmlFor="CategoryId">Relationship:</label>
+        </span>
+        <select
+          name="CategoryId"
+          id="CategoryId"
+          value={contact ? contact.categoryId : 0}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setContact((prev) =>
+              prev ? { ...prev, categoryId: +e.target.value } : prev
+            );
+          }}
+        >
+          {categories.map((category: { id: number; name: string }) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex justify-between">
+        <span>
+          <label htmlFor="DesiredContactFrequency">Contact Frequency:</label>
+        </span>
+        <select
+          name="DesiredContactFrequency"
+          id="DesiredContactFrequency"
+          value={contact ? contact.desiredContactFrequency : ""}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setContact((prev) =>
+              prev
+                ? { ...prev, desiredContactFrequency: +e.target.value }
+                : prev
+            );
+          }}
+        >
+          <option value={ContactFrequency.Daily}>Daily</option>
+          <option value={ContactFrequency.Weekly}>Weekly</option>
+          <option value={ContactFrequency.Monthly}>Monthly</option>
+          <option value={ContactFrequency.Quarterly}>Quarterly</option>
+          <option value={ContactFrequency.Yearly}>Yearly</option>
+        </select>
+      </div>
 
       <textarea
         name="Notes"

@@ -20,7 +20,12 @@ function App() {
   return (
     <>
       <div className="main-container flex mx-auto border shadow-lg rounded p-2 h-[100dvh]">
-        <div className="side-panel space-y-2 shadow p-4">
+        <div className="side-panel space-y-2 shadow p-4 hidden sm:block">
+          <h1 className="font-bold uppercase text-slate-600">
+            <Link to="/" className="flex items-center gap-2">
+              <IoHome /> home
+            </Link>
+          </h1>
           <form action="">
             <input type="text" placeholder="Search" id="q" name="q" />
           </form>
@@ -38,20 +43,13 @@ function App() {
                   to={`/contacts/${contact.id}`}
                   className="border border-slate-100 p-2 rounded font-bold text-slate-600 hover:bg-slate-700 hover:text-white"
                 >
-                  <li key={contact.id} className="">
-                    {contact.name}
-                  </li>
+                  <li className="">{contact.name}</li>
                 </Link>
               ))}
             </ul>
           </div>
         </div>
-        <div className="main-panel px-4">
-          <h1 className="font-bold uppercase text-slate-600">
-            <Link to="/" className="flex items-center gap-2">
-              <IoHome /> home
-            </Link>
-          </h1>
+        <div className="main-panel p-4">
           <Outlet />
         </div>
       </div>

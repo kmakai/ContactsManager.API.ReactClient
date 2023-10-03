@@ -32,50 +32,54 @@ const Contact: React.FC = () => {
 
   return (
     <div className="flex gap-4">
-      <div className="left">
-        <div className="flex gap-2">Info</div>
+      <div className="left text-lg">
+        <div className="flex gap-2 font-semibold">Info</div>
         <hr />
         <div className="flex gap-2">
-          <span>Name:</span>
+          <span className="font-bold text-slate-500">name:</span>
           <p>{contact?.name}</p>
         </div>
 
         <div className="flex gap-2">
-          <span>Email:</span>
+          <span className="font-bold text-slate-500">email:</span>
           <p>{contact?.email}</p>
         </div>
 
         <div className="flex gap-2">
-          <span>Phone:</span>
+          <span className="font-bold text-slate-500">phone:</span>
           <p>{contact?.phone}</p>
         </div>
 
         <div className="flex gap-2">
-          <span>Relation:</span>
+          <span className="font-bold text-slate-500">relationship:</span>
           <p>{contact?.category.name}</p>
         </div>
       </div>
-      <div className="right">
-        <h1>Notes</h1>
+      <div className="right text-lg">
+        <h1 className="font-semibold">Notes</h1>
         <hr />
         <p>{contact?.notes}</p>
 
         <div className="flex gap-2">
-          <span>Last Contacted:</span>
-          <span>{new Date(contact?.lastContactDate).toLocaleDateString()}</span>
+          <span className="font-bold text-slate-500">contacted on:</span>
+          <span>
+            {contact?.lastContactDate
+              ? new Date(contact?.lastContactDate).toLocaleDateString()
+              : ""}
+          </span>
           by
-          <p>{Object.values(LastContactType)[contact?.lastContact]}</p>
+          <p>{LastContactType[contact?.lastContact as number]}</p>
         </div>
         <button className="ms-auto">
           <Link
             to={`/contacts/${contact?.id}/edit`}
             className="flex items-center gap-2"
           >
-            <FaUserEdit /> edit
+            <FaUserEdit /> update
           </Link>
         </button>
         <button
-          className=" text-red-300 flex items-center gap-2"
+          className=" text-red-500 flex items-center gap-2"
           onClick={() => OnDelete()}
         >
           <TiUserDeleteOutline /> delete
