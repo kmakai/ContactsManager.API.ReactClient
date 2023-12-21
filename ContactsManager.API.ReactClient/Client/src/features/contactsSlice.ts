@@ -17,7 +17,7 @@ export const getContacts = createAsyncThunk(
   async () => {
     const response = await fetch("https://localhost:7139/api/Contact");
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   }
 );
@@ -60,7 +60,7 @@ export const getContact = createAsyncThunk(
   async (id: number) => {
     const response = await fetch(`https://localhost:7139/api/Contact/${id}`);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   }
 );

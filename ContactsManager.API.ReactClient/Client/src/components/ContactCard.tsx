@@ -12,7 +12,7 @@ const ContactCard: React.FC<contactProps> = ({ contact }) => {
     const diff = Math.abs(today.getTime() - lastContactDate.getTime());
     const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     let frequency;
-    console.log(ContactFrequency[contact.desiredContactFrequency]);
+    // console.log(ContactFrequency[contact.desiredContactFrequency]);
     switch (ContactFrequency[contact.desiredContactFrequency]) {
       case "Weekly":
         frequency = 7;
@@ -33,7 +33,7 @@ const ContactCard: React.FC<contactProps> = ({ contact }) => {
         frequency = 0;
     }
 
-    console.log(diffDays, frequency, contact.name);
+    // console.log(diffDays, frequency, contact.name);
     return diffDays > frequency;
   }
   return (

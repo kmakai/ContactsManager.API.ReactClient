@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "./features/hooks";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import "./App.css";
 // import ContactForm from "./components/ContactForm";
 // import ContactEditForm from "./components/ContactEditForm";
@@ -11,6 +11,20 @@ import { IoHome } from "react-icons/io5";
 function App() {
   const { contacts } = useAppSelector((state) => state.contacts);
   const dispatch = useAppDispatch();
+
+  const searchFilter = (e: ChangeEvent) => {
+    const searchInput = (e.target as HTMLInputElement).value;
+    const contacts = document.querySelectorAll(".contact-link");
+    contacts.forEach((contact) => {
+      if (
+        contact.textContent?.toLowerCase().includes(searchInput.toLowerCase())
+      ) {
+        contact.classList.remove("hidden");
+      } else {
+        contact.classList.add("hidden");
+      }
+    });
+  };
 
   useEffect(() => {
     if (contacts.length === 0) {
@@ -27,7 +41,13 @@ function App() {
             </Link>
           </h1>
           <form action="">
-            <input type="text" placeholder="Search" id="q" name="q" />
+            <input
+              type="text"
+              placeholder="Search"
+              id="q"
+              name="q"
+              onChange={searchFilter}
+            />
           </form>
           <hr className="" />
           <Link to="/contacts/new">
@@ -41,9 +61,9 @@ function App() {
                 <Link
                   key={contact.id}
                   to={`/contacts/${contact.id}`}
-                  className="border border-slate-100 p-2 rounded font-bold text-slate-600 hover:bg-slate-700 hover:text-white"
+                  className="border border-slate-100 p-2 rounded font-bold text-slate-600 hover:bg-slate-700 hover:text-white contact-link"
                 >
-                  <li className="">{contact.name}</li>
+                  <li className="contact-name">{contact.name}</li>
                 </Link>
               ))}
             </ul>

@@ -26,7 +26,7 @@ const ContactEditForm: React.FC = () => {
       "https://localhost:7139/api/Contact/Categories"
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     setCategories(data);
   }
 
@@ -91,7 +91,7 @@ const ContactEditForm: React.FC = () => {
           id="phone"
           value={contact ? contact.phone : ""}
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setContact((prev) =>
               prev ? { ...prev, phone: e.target.value } : prev
             );
@@ -114,7 +114,7 @@ const ContactEditForm: React.FC = () => {
               : ""
           }
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setContact((prev) =>
               prev
                 ? {
@@ -136,7 +136,7 @@ const ContactEditForm: React.FC = () => {
           id="LastContact"
           value={contact ? contact.lastContact : 0}
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setContact((prev) =>
               prev ? { ...prev, lastContact: +e.target.value } : prev
             );
@@ -159,7 +159,7 @@ const ContactEditForm: React.FC = () => {
           id="CategoryId"
           value={contact ? contact.categoryId : 0}
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setContact((prev) =>
               prev ? { ...prev, categoryId: +e.target.value } : prev
             );
@@ -182,7 +182,7 @@ const ContactEditForm: React.FC = () => {
           id="DesiredContactFrequency"
           value={contact ? contact.desiredContactFrequency : ""}
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setContact((prev) =>
               prev
                 ? { ...prev, desiredContactFrequency: +e.target.value }
@@ -205,7 +205,7 @@ const ContactEditForm: React.FC = () => {
         rows={5}
         value={contact ? contact.notes : ""}
         onChange={(e) => {
-          console.log(e.target.value);
+          // console.log(e.target.value);
           setContact((prev) =>
             prev ? { ...prev, notes: e.target.value } : prev
           );
